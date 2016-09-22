@@ -1,3 +1,3 @@
 # bxgcloud
 
-### Sensitive to the action
+Sensitive to the action！
