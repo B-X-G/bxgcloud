@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class BxgConfig(AppConfig):
-    name = 'BXG'
+    name = 'bxgcloud'
