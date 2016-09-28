@@ -5,7 +5,7 @@ from env import install_package
 
 
 def run():
-    scripts = set(['install'])
+    scripts = {'install'}
     argv = sys.argv
     if len(argv) < 2:
         print('please input script argument')
