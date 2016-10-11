@@ -13,8 +13,8 @@ def install_package(name):
     for package_name in package_names:
         if package_name.lower().startswith(name.lower()):
             with open('{}/requirements.txt'.format(os.getcwd()), 'a+') as r:
-                allPackages = [readline.split('\n')[0] for readline in r.readlines()]
-                if package_name in allPackages:
+                all_packages = set(readline.split('\n')[0] for readline in r.readlines())
+                if package_name in all_packages:
                     print ('the package is exist')
                 else:
                     r.write(package_name)
