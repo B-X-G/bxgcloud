@@ -20,8 +20,8 @@ def install_package(package_name):
     package_name_term = package_name if '==' in package_name else '{}=='.format(package_name)
     exist_package_name_and_version_in_env = subprocess.Popen('sudo pip freeze |grep -i {}'.format(package_name_term), stdout=subprocess.PIPE, shell=True).communicate()[0]
     with open(requirements_path, 'a+') as r:
-        exist_package_name_and_versions = set(line.split('\n')[0] for line in r.readlines())
-        exist_package_name_and_version_list = [name_and_version for name_and_version in exist_package_name_and_versions if name_and_version.lower().startswith(package_name_term.lower())]
+        lines = [line.split('\n')[0] for line in r.readlines()]
+        exist_package_name_and_version_list = [line for line in lines if line.lower().startswith(package_name_term.lower())]
         exist_package_name_and_version = exist_package_name_and_version_list[0].strip() if exist_package_name_and_version_list else None
         if exist_package_name_and_version:
             if exist_package_name_and_version.strip() == exist_package_name_and_version_in_env.strip():
@@ -33,6 +33,6 @@ def install_package(package_name):
             if exist_package_name_and_version_in_env:
                 r.write(exist_package_name_and_version_in_env)
                 print('successfully record package name and version in requirements.txt')
-            new_package_name_version = subprocess.Popen('sudo pip install {}; sudo pip freeze |grep {}'.format(package_name, package_name_term), stdout=subprocess.PIPE, shell=True).communicate()[0]
-            r.write(new_package_name_version)
-            print('successfully install {}'.format(new_package_name_version))
+            new_package_name_and_version = subprocess.Popen('sudo pip install {}; sudo pip freeze |grep {}'.format(package_name, package_name_term), stdout=subprocess.PIPE, shell=True).communicate()[0]
+            r.write(new_package_name_and_version)
+            print('successfully install {}'.format(new_package_name_and_version))
