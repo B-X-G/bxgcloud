@@ -4,17 +4,18 @@ from django.db import models
 
 # Create your models here.
 
+
 class Member(models.Model):
     '''
     the model about Member
     '''
     SEX_TYPE = (
-        (1,'boy'),
-        (2,'girl'),
+        (1, 'boy'),
+        (2, 'girl'),
     )
     member_id = models.SmallIntegerField(primary_key=True)
     name = models.CharField(max_length=128)
-    sex = models.SmallIntegerField(default=1,choices=SEX_TYPE)
+    sex = models.SmallIntegerField(default=1, choices=SEX_TYPE)
     birth = models.DateField()
     phone_number = models.CharField(max_length=128, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
@@ -42,15 +43,15 @@ class Classify(models.Model):
     the model about classify
     '''
     BLOG_TYPE = (
-        (1,'Python'),
-        (2,'Java'),
-        (3,'C'),
-        (4,'C++'),
-        (5,'Ruby'),
-        (6,'PHP'),
-        (7,'Javascript'),
-        (8,'Mysql'),
-        (9,'PostgreSQL'),
+        (1, 'Python'),
+        (2, 'Java'),
+        (3, 'C'),
+        (4, 'C++'),
+        (5, 'Ruby'),
+        (6, 'PHP'),
+        (7, 'Javascript'),
+        (8, 'Mysql'),
+        (9, 'PostgreSQL'),
     )
     classify_id = models.SmallIntegerField(primary_key=True)
     classify_name = models.SmallIntegerField(default=1, choices=BLOG_TYPE)
@@ -105,8 +106,8 @@ class Question(models.Model):
     the model about Question
     '''
     SOLVE_STATUE = (
-        (1,'resolved'),
-        (2,'not resolved'),
+        (1, 'resolved'),
+        (2, 'not resolved'),
     )
     question_id = models.SmallIntegerField(primary_key=True)
     question_author = models.ForeignKey(Member, on_delete=models.CASCADE)
@@ -119,7 +120,11 @@ class Question(models.Model):
     class Meta:
         managed = True
         db_table = 'Question'
-        ordering = ['question_title', 'create_time', 'solve_status', 'question_classify']
+        ordering = [
+            'question_title',
+            'create_time',
+            'solve_status',
+            'question_classify']
         unique_together = ('question_title', 'question_author', 'create_time')
 
     def __unicode__(self):
@@ -131,8 +136,8 @@ class Answer(models.Model):
     the model about Answer
     '''
     ADOPT_STATUS = (
-        (1,'adopted'),
-        (2,'not adopted'),
+        (1, 'adopted'),
+        (2, 'not adopted'),
     )
     answer_id = models.SmallIntegerField(primary_key=True)
     answer_author = models.ForeignKey(Member, on_delete=models.CASCADE)
@@ -154,8 +159,14 @@ class Follow(models.Model):
     '''
     the model about Follow
     '''
-    follower = models.ForeignKey(Member, related_name='follower', on_delete=models.CASCADE)
-    be_follower = models.ForeignKey(Member, related_name='be_follower',on_delete=models.CASCADE)
+    follower = models.ForeignKey(
+        Member,
+        related_name='follower',
+        on_delete=models.CASCADE)
+    be_follower = models.ForeignKey(
+        Member,
+        related_name='be_follower',
+        on_delete=models.CASCADE)
     follow_time = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -192,11 +203,3 @@ class AnswerScore(models.Model):
         managed = True
         db_table = 'AnswerScore'
         unique_together = ('score_person', 'score_answer')
-
-
-
-
-
-
-
-

@@ -45,7 +45,8 @@ class MemberList(APIView):
         else:
             result = {'result': 'the author post failed',
                       'reason': 'the message is not valid'}
-            return Response(result, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                result, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, requset):
         '''
