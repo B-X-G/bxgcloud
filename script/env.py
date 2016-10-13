@@ -23,16 +23,17 @@ def install_package(package_name):
         lines = [line.split('\n')[0] for line in r.readlines()]
         exist_package_name_and_version_list = [line for line in lines if line.lower().startswith(package_name_term.lower())]
         exist_package_name_and_version = exist_package_name_and_version_list[0].strip() if exist_package_name_and_version_list else None
-        if exist_package_name_and_version:
-            if exist_package_name_and_version.strip() == exist_package_name_and_version_in_env.strip():
+        if exist_package_name_and_version:  # requirements.txt中含有该安装包
+            if exist_package_name_and_version.strip() == exist_package_name_and_version_in_env.strip():  # 本地包名和版本 与 requirements.txt 相同
                 print('you already install this package')
             else:
-                subprocess.Popen('sudo pip install {}'.format(exist_package_name_and_version), shell=True)
+                os.system('sudo pip install {}'.format(exist_package_name_and_version))  # 本地包名和版本 与 requirements.txt 不一致，以requirements.txt为准 并安装
                 print('successfully change the package version by requirements.txt')
-        else:
-            if exist_package_name_and_version_in_env:
+        else: # requirements.txt中不含该安装包
+            if exist_package_name_and_version_in_env: # 如果本地已经安装该安装包，将该包和其版本写入requirements.txt中
                 r.write(exist_package_name_and_version_in_env)
                 print('successfully record package name and version in requirements.txt')
-            new_package_name_and_version = subprocess.Popen('sudo pip install {}; sudo pip freeze |grep {}'.format(package_name, package_name_term), stdout=subprocess.PIPE, shell=True).communicate()[0]
-            r.write(new_package_name_and_version)
-            print('successfully install {}'.format(new_package_name_and_version))
+            else: # 否则本地未安装该安装包， 进行安装， 并将包和其版本号写入requirements.txt中
+                new_package_name_and_version = subprocess.Popen('sudo pip install {}; sudo pip freeze |grep {}'.format(package_name, package_name_term), stdout=subprocess.PIPE, shell=True).communicate()[0].split('\n')[4]
+                r.write(new_package_name_and_version)
+                print('successfully install {}'.format(new_package_name_and_version))
