@@ -27,7 +27,7 @@ def install_package(package_name):
             if exist_package_name_and_version.strip() == exist_package_name_and_version_in_env.strip():
                 print('you already install this package')
             else:
-                subprocess.Popen('sudo pip install {}'.format(exist_package_name_and_version), stdout=subprocess.PIPE, shell=True)
+                subprocess.Popen('sudo pip install {}'.format(exist_package_name_and_version), shell=True)
                 print('successfully change the package version by requirements.txt')
         else:
             if exist_package_name_and_version_in_env:
