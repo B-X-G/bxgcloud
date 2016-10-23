@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-// 传入参数website以满足同时处理多个website的条件
+// 通过NODE_TYPE设置不同环境，从而构建不同website的环境
 var websites = ['mobile'];
 var website = process.env.NODE_ENV;
 if (website.indexOf(websites) === -1) {
