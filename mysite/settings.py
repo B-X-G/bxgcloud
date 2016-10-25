@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_swagger',
     'bxgcloud',
 ]
 
@@ -86,6 +87,22 @@ DATABASES = {
     }
 }
 
+
+#Swagger Tools
+#http://django-rest-swagger.readthedocs.io/en/latest/settings/
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS':{
+        'basic':{
+            'type':'basic'
+        }
+    },
+    'APIS_SORTER': 'alpha',
+    'DOC_EXPANSION': None,
+    'JSON_EDITOR':True,
+    'OPERATIONS_SORTER':'alpha',
+    'SHOW_REQUEST_HEADERS':False,
+    'SUPPORTED_SUBMIT_METHODS':['get','post','put','delete','patch']
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators

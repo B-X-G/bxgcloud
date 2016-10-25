@@ -79,6 +79,7 @@ class MemberList(APIView):
         '''
         try:
             Member.objects.all().delete()
+            return Response(status=status.HTTP_200_OK)
         except:
             traceback.print_exc()
             return Response(status.HTTP_403_FORBIDDEN)
